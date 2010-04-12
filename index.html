@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="imagetoolbar" content="no" />
+	<title>計測</title>
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.sparkline.min.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        /** This code runs when everything has been loaded on the page */
+        /* Inline sparklines take their values from the contents of the tag */
+        $('.inlinesparkline').sparkline('html', {width: '400px', height: '100px', chartRangeMin: '0.1', chartRangeMax: '2.0' }); 
+ 
+        /* Sparklines can also take their values from the first argument 
+        passed to the sparkline() function */
+        var myvalues = [10,8,5,7,4,4,1];
+        $('.dynamicsparkline').sparkline(myvalues);
+
+        /* The second argument gives options such as chart type */
+        $('.dynamicbar').sparkline(myvalues, {type: 'bar', barColor: 'green'} );
+
+        /* Use 'html' instead of an array of values to pass options 
+        to a sparkline with data in the tag */
+        $('.inlinebar').sparkline('html', {type: 'bar', barColor: 'red', width: '400px', height: '100px', chartRangeMin: '0.1', chartRangeMax: '2.0'} );
+
+        // id="slider" を親要素に持つdivを非表示
+        $("#measuring_indicate").css("display", "none");
+
+        // id="slider"を親要素に持つi番目のh5が
+        // クリックされた時、i番目のdivの表示、非表示切り替え
+        $("#measuring_indicate").each(function(i){
+            $(slider).click(function(){
+                $("#measuring_indicate > div").eq(i).toggle();
+            });
+        });
+
+    // id="measure_indicate" を親要素に持つdivを非表示
+    $("#measure_indicate > div").css("display", "none");
+    
+    // id="measure_indicate"を親要素に持つi番目のh5が
+    // クリックされた時、i番目のdivの表示、非表示切り替え
+    $("#measure_indicate > h5").each(function(i){
+        $(this).click(function(){
+            $("#measure_indicate > div").eq(i).toggle();
+        });
+    });
+
+    });
+
+    </script>
+</head>
+  <p>Top　｜　<a href="/site/">サイト一覧</a></p>
+
+  <p>計測結果</p>
+
+  <p>{{ message }}</p>
+
+  <hr>
+
+<div id="measure_indicate">
+    {% for site in sites %}
+    <h5>{{ site.name }}
+    <span class="inlinesparkline">0{% for measureing in site.measureings %},{{ measureing.measure }}{% endfor %}</span>.
+    </h5>
+    <div>
+        <p>
+        {% for measureing in site.measureings %}
+        {{ measureing.measure }} by {{ measureing.date_on }} <br />
+        {% endfor %}
+        </p>
+    </div>
+  {% endfor %}
+</div>
+</body>
+</html>

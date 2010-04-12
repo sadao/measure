@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="imagetoolbar" content="no" />
+	<title>計測</title>
+</head>
+  <p><a href="/">Top</a>　｜　サイト一覧</p>
+
+  <hr>
+
+  <p><strong>{{ message }}</strong></p>
+
+  <form action="/site/" method="POST">
+  <table>
+    <tr>
+      <td><input type="submit" value="サイト登録"/></td>
+      <td><input type="text" style="width: 160px;" size="30" name="name" value="サイト名をどうぞ"/></td>
+      <td><input type="text" style="width: 160px;" size="120" name="url" value="http://"/></td>
+    </tr>
+  </table>
+  </form>
+
+  <hr>
+
+  <form action="/site/delete/" method="POST">
+  <table>
+    <tr>
+      <td><input type="submit" value="削除"/></td>
+      <td>サイト名</td>
+      <td>サイトURL</td>
+    </tr>
+
+    {% for site in sites %}
+    <tr>
+      <td><input type="checkbox" name="site_id" value="{{ site.key }}"></td>
+      <td>{{ site.name }}</td>
+      <td>{{ site.permalink }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  </form>
+
+</body>
+</html>

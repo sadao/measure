@@ -1,0 +1,4 @@
+cron:
+- description: fetch meashre
+  url: /site/fetch/
+  schedule: every 30 minutes
